@@ -51,6 +51,56 @@ public class Imagen {
 		}
 		return x;
 	}
+	
+	/*
+	 * H=0
+	 * S=1
+	 * V=2
+	 * */
+	public double[] RGBaHSB(short R,short G, short B){
+		double[] HSB=new double[3];
+		short M=(short)Math.max(R, Math.max(G, B)),m=(short)Math.min(R, Math.min(G, B)),C;
+		C=(short)(M-m);
+		if(C==0){
+			HSB[0]=0;
+		}else if(M==R){
+			HSB[0]=60*(((G-B)/(C*1.0))%6);
+		}else if(M==G){
+			HSB[0]=60*(((B-R)/(C*1.0))+2);
+		}else{
+			HSB[0]=60*(((R-G)/(C*1.0))+4);
+		}
+		HSB[1]=(C==0)?0:(C*1.0)/M;
+		HSB[2]=M/255.0;//(0.3*R+0.59*G+0.11*B)/255;
+		
+		if(HSB[0]<0){
+			HSB[0]=360+HSB[0];
+		}
+		return HSB;
+	}
+	
+	public BufferedImage filtrarBN(){
+		int alto=imagen.getHeight(),ancho=imagen.getWidth();
+		BufferedImage x=new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_RGB);
+		for(int i=0;i<ancho;i++){
+			for(int j=0;j<alto;j++){
+				int color=imagen.getRGB(i, j);
+				int R,G,B;
+				B=color&255;
+				G=(color>>8)&255;
+				R=(color>>16)&255;
+				double[] hsb=RGBaHSB((short)R, (short)G, (short)B);
+				if(hsb[2]>0.5){
+					x.setRGB(i, j, 0xffffffff);
+				}else{
+					x.setRGB(i, j, 0);
+				}
+			}
+		}
+		return x;
+	}
+	
+	
 	public static float[] getCentroide(BufferedImage bn,int relebante){
 		int alto=bn.getHeight(),ancho=bn.getWidth();
 		long contador=0,x=0,y=0;

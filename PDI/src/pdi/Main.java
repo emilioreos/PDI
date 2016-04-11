@@ -40,7 +40,7 @@ public class Main {
 	}
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		File f=Main.getFile(),f2=Main.getFile();
+		/*File f=Main.getFile(),f2=Main.getFile();
 		Imagen ima=new Imagen(f);
 		Imagen ima2=new Imagen(f2);
 		BufferedImage bn=(BufferedImage)ima.aBN(0.5f);
@@ -82,7 +82,11 @@ public class Main {
 		System.out.println(""+c3*100+"%");
 		System.out.println(""+c4*100+"%");
 		System.out.println(""+c5*100+"%");
+		*/
 		
+		File f=getFile();
+		Imagen ima=new Imagen(f);
+		BufferedImage bn=ima.filtrarBN();
 		JLabel l=new JLabel(new ImageIcon(bn));
 		JOptionPane.showMessageDialog(null,l);
 	}
