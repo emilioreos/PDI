@@ -15,6 +15,9 @@ public class Imagen {
 	
 	private BufferedImage imagen;
 	
+	public Imagen(BufferedImage im){
+		imagen=im;
+	}
 	public Imagen(File imagen) throws IOException{
 		this.imagen=ImageIO.read(imagen);
 	}
@@ -71,7 +74,7 @@ public class Imagen {
 			HSB[0]=60*(((R-G)/(C*1.0))+4);
 		}
 		HSB[1]=(C==0)?0:(C*1.0)/M;
-		HSB[2]=M/255.0;//(0.3*R+0.59*G+0.11*B)/255;
+		HSB[2]=M/255.0;
 		
 		if(HSB[0]<0){
 			HSB[0]=360+HSB[0];
@@ -81,19 +84,20 @@ public class Imagen {
 	
 	public BufferedImage filtrarBN(){
 		int alto=imagen.getHeight(),ancho=imagen.getWidth();
-		BufferedImage x=new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_RGB);
+		int nuevoalto=(int)(alto-(alto*0.25+(alto-alto*0.69)));
+		BufferedImage x=new BufferedImage(ancho, nuevoalto, BufferedImage.TYPE_INT_RGB);
 		for(int i=0;i<ancho;i++){
-			for(int j=0;j<alto;j++){
-				int color=imagen.getRGB(i, j);
+			for(int j=0;j<nuevoalto;j++){
+				int color=imagen.getRGB(i, j+(int)(alto*0.25));
 				int R,G,B;
 				B=color&255;
 				G=(color>>8)&255;
 				R=(color>>16)&255;
 				double[] hsb=RGBaHSB((short)R, (short)G, (short)B);
-				if(hsb[2]>0.5){
-					x.setRGB(i, j, 0xffffffff);
-				}else{
+				if(hsb[2]<0.4||(hsb[2]>0.2&&hsb[2]<0.6&&hsb[1]<0.1)){
 					x.setRGB(i, j, 0);
+				}else{
+					x.setRGB(i, j, 0xffffffff);
 				}
 			}
 		}

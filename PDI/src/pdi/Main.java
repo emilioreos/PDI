@@ -40,14 +40,15 @@ public class Main {
 	}
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		/*File f=Main.getFile(),f2=Main.getFile();
+		/*
+		File f=Main.getFile(),f2=Main.getFile();
 		Imagen ima=new Imagen(f);
 		Imagen ima2=new Imagen(f2);
 		BufferedImage bn=(BufferedImage)ima.aBN(0.5f);
 		BufferedImage bn2=(BufferedImage)ima2.aBN(0.5f);
 		
 		double fi1,fi2,fi3,fi4,fi5;
-		float[] centro=Imagen.getCentroide(bn2, Imagen.FONDO_BLANCO);
+		float[] centro=Imagen.getCentroide(bn, Imagen.FONDO_BLANCO);
 		fi1=Imagen.F1(bn, Imagen.FONDO_BLANCO, centro);
 		fi2=Imagen.F2(bn, Imagen.FONDO_BLANCO, centro);
 		fi3=Imagen.F3(bn, Imagen.FONDO_BLANCO, centro);
@@ -55,7 +56,7 @@ public class Main {
 		fi5=Imagen.F5(bn, Imagen.FONDO_BLANCO, centro);
 		
 		double fi12,fi22,fi32,fi42,fi52;
-		float[] centro2=Imagen.getCentroide(bn, Imagen.FONDO_BLANCO);
+		float[] centro2=Imagen.getCentroide(bn2, Imagen.FONDO_BLANCO);
 		fi12=Imagen.F1(bn2, Imagen.FONDO_BLANCO, centro2);
 		fi22=Imagen.F2(bn2, Imagen.FONDO_BLANCO, centro2);
 		fi32=Imagen.F3(bn2, Imagen.FONDO_BLANCO, centro2);
@@ -84,11 +85,13 @@ public class Main {
 		System.out.println(""+c5*100+"%");
 		*/
 		
-		File f=getFile();
-		Imagen ima=new Imagen(f);
-		BufferedImage bn=ima.filtrarBN();
-		JLabel l=new JLabel(new ImageIcon(bn));
-		JOptionPane.showMessageDialog(null,l);
+		while(true){
+			File f=getFile();
+			Imagen ima=new Imagen(f);
+			BufferedImage bn=ima.filtrarBN();
+			JLabel l=new JLabel(new ImageIcon(bn));
+			JOptionPane.showMessageDialog(null,l);
+		}
 	}
 
 }
