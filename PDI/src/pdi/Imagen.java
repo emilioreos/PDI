@@ -3,6 +3,7 @@ package pdi;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 
@@ -36,6 +37,34 @@ public class Imagen {
 			}
 		}
 		return x;
+	}
+	public static LinkedList<Integer> finales(BufferedImage ima){
+		LinkedList<Integer> fines=new LinkedList<Integer>();
+		int alto=ima.getHeight(),ancho=ima.getWidth();
+		boolean ban=true;
+		for(int i=0;i<ancho;i++){
+			for(int j=0;j<alto;j++){
+				int color=ima.getRGB(i, j);
+				if(color==FONDO_BLANCO){
+					ban=false;
+					break;
+				}
+			}
+			if(ban){
+				fines.add(i);
+			}
+			ban=true;
+		}
+		int j=fines.getFirst();
+		LinkedList<Integer> tmp=new LinkedList<Integer>();
+		for(int i=1;i<fines.size();i++){
+			if(j+1!=fines.get(i)){
+				tmp.add(j);
+				tmp.add(fines.get(i));
+			}
+			j=fines.get(i);
+		}
+		return tmp;
 	}
 	public Image aBN(float nivel){
 		int alto=imagen.getHeight(),ancho=imagen.getWidth();
@@ -179,4 +208,16 @@ public class Imagen {
 				*(3*Math.pow(Vij(bn, relebante, 3, 0, centro)+Vij(bn,relebante,1,2,centro), 2)-Math.pow(Vij(bn, relebante, 2, 1, centro)+Vij(bn,relebante,0,3,centro), 2));
 		return f5;
 	}
+	
+	public static BufferedImage recortar(BufferedImage origen,int inicio,int fin){
+		int ancho=fin-inicio,alto=origen.getHeight();
+		BufferedImage ima=new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_BGR);
+		for(int i=0;i<ancho;i++){
+			for(int j=0;j<alto;j++){
+				ima.setRGB(i, j, origen.getRGB(inicio+i, j));
+			}
+		}
+		return ima;
+	}
+	
 }
