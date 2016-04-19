@@ -77,7 +77,7 @@ public class Imagen {
 				G=(color>>8)&255;
 				R=(color>>16)&255;
 				color=(int)(R*0.3+G*0.59+B*0.11);
-				color=(color>(255*nivel))?16777215:0;
+				color=(color<(255*nivel))?0:16777215;
 				x.setRGB(i, j, color);
 			}
 		}
