@@ -200,11 +200,17 @@ public class Cadenas {
 			0.004092039615877867,
 			0.0015311701527384002,
 			3.5812447361674044E-6
+			},{//-
+			0.22050725409916427,
+			0.022218134835271124,
+			1.997395241507908E-5,
+			3.5918156470078407E-6,
+			2.1459178169549472E-11
 			}
 	};
 	public static final String[] Strings={"0","1","2","3","4","5","6",
 		"7","8","9","A","B","C","D","E","F","G","H","J","K","L","M","N","P","R",
-		"S","T","U","V","W","X","Y","Z"};
+		"S","T","U","V","W","X","Y","Z","-"};
 	public static final String[] letras={
 		"C:\\Users\\Emilio\\Documents\\alfabeto\\0.jpg",
 		"C:\\Users\\Emilio\\Documents\\alfabeto\\1.jpg",

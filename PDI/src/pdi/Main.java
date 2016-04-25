@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Main {
 
@@ -43,12 +44,12 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		//for(int i=0;i<Cadenas.letras.length;i++){
-		//File f=new File(Cadenas.letras[i]);//=Main.getFile();//,f2=Main.getFile();
-		//Imagen ima=new Imagen(f);
-		//Imagen ima2=new Imagen(f2);
-		//BufferedImage bn=(BufferedImage)ima.aBN(0.5f);
-		//BufferedImage bn2=(BufferedImage)ima2.aBN(0.4f);
-		/*
+		/*File f=Main.getFile(),f2=Main.getFile();
+		Imagen ima=new Imagen(f);
+		Imagen ima2=new Imagen(f2);
+		BufferedImage bn=(BufferedImage)ima.aBN(0.5f);
+		BufferedImage bn2=(BufferedImage)ima2.aBN(0.5f);
+		
 		double fi1,fi2,fi3,fi4,fi5;
 		float[] centro=Imagen.getCentroide(bn, Imagen.FONDO_BLANCO);
 		fi1=Imagen.F1(bn, Imagen.FONDO_BLANCO, centro);
@@ -56,15 +57,15 @@ public class Main {
 		fi3=Imagen.F3(bn, Imagen.FONDO_BLANCO, centro);
 		fi4=Imagen.F4(bn, Imagen.FONDO_BLANCO, centro);
 		fi5=Imagen.F5(bn, Imagen.FONDO_BLANCO, centro);
-		*/
-		/*double fi12,fi22,fi32,fi42,fi52;
+		
+		double fi12,fi22,fi32,fi42,fi52;
 		float[] centro2=Imagen.getCentroide(bn2, Imagen.FONDO_BLANCO);
 		fi12=Imagen.F1(bn2, Imagen.FONDO_BLANCO, centro2);
 		fi22=Imagen.F2(bn2, Imagen.FONDO_BLANCO, centro2);
 		fi32=Imagen.F3(bn2, Imagen.FONDO_BLANCO, centro2);
 		fi42=Imagen.F4(bn2, Imagen.FONDO_BLANCO, centro2);
 		fi52=Imagen.F5(bn2, Imagen.FONDO_BLANCO, centro2);
-		*//*
+		
 		System.out.println(Cadenas.momentos[0][4]);
 		System.out.println(fi1);
 		System.out.println(fi2);
@@ -74,9 +75,10 @@ public class Main {
 		System.out.println("************");
 		
 		JLabel l=new JLabel(new ImageIcon(bn));
-		JOptionPane.showMessageDialog(null,l);
-		}*/
-		/*System.out.println(fi12);
+		JOptionPane.showMessageDialog(null,l);*/
+		//}
+		/*
+		System.out.println(fi12);
 		System.out.println(fi22);
 		System.out.println(fi32);
 		System.out.println(fi42);
@@ -90,13 +92,13 @@ public class Main {
 		System.out.println(""+c2*100+"%");
 		System.out.println(""+c3*100+"%");
 		System.out.println(""+c4*100+"%");
-		System.out.println(""+c5*100+"%");*/
+		System.out.println(""+c5*100+"%");
 		
-		/*Imagen im=new Imagen(new File(Cadenas.letras[15]));
+		Imagen im=new Imagen(new File(Cadenas.letras[15]));
 		BufferedImage in=(BufferedImage)im.aBN(0.4f);
 		JLabel ll=new JLabel(new ImageIcon(in));
-		JOptionPane.showMessageDialog(null,ll);*/
-		
+		JOptionPane.showMessageDialog(null,ll);
+		*/
 		while(true){
 			File f=getFile();
 			Imagen ima=new Imagen(f);
@@ -204,23 +206,53 @@ public class Main {
 				l2.add(l.get(i));
 			}
 		}
-		for(int i=0;i<l2.size();i++){
-			if(Math.abs((momentos[2]-Cadenas.momentos[l2.get(i)][2])/momentos[2])<0.30){
-				l3.add(l2.get(i));
+		for(int i=0;i<l.size();i++){
+			if(Math.abs((momentos[2]-Cadenas.momentos[l.get(i)][2])/momentos[2])<0.30){
+				l3.add(l.get(i));
 			}
 		}
-		for(int i=0;i<l3.size();i++){
-			if(Math.abs((momentos[3]-Cadenas.momentos[l3.get(i)][3])/momentos[3])<0.4){
-				l4.add(l3.get(i));
+		for(int i=0;i<l.size();i++){
+			if(Math.abs((momentos[3]-Cadenas.momentos[l.get(i)][3])/momentos[3])<0.4){
+				l4.add(l.get(i));
 			}
 		}
-		for(int i=0;i<l4.size();i++){
-			if(Math.abs((momentos[4]-Cadenas.momentos[l4.get(i)][4])/momentos[4])<0.6){
-				l5.add(l4.get(i));
+		for(int i=0;i<l.size();i++){
+			if(Math.abs((momentos[4]-Cadenas.momentos[l.get(i)][4])/momentos[4])<0.6){
+				l5.add(l.get(i));
 			}
 		}
-		if(l2.size()>0)
-		cadena.append(Cadenas.Strings[l2.getLast()]);
+		
+		int pos=-1;
+		int votos=1;
+		if(l.contains(33)){
+			cadena.append(Cadenas.Strings[33]);
+			return l;
+		}
+		for(int i=0;i<l.size();i++){
+			int votos2=0;
+			if(l2.contains(l.get(i))){
+				votos2++;
+			}
+			if(l3.contains(l.get(i))){
+				votos2++;
+			}
+			if(l4.contains(l.get(i))){
+				votos2++;
+			}
+			if(l5.contains(l.get(i))){
+				votos2++;
+			}
+			if(votos2>=votos){
+				votos=votos2;
+				pos=i;
+				
+			}
+		}
+		
+		
+		if(pos>-1){
+			cadena.append(Cadenas.Strings[l.get(pos)]);
+		}
 		return l;
 	}
 
